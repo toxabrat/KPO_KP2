@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: filedb
+    environment:
+      POSTGRES_DB: plagiat
+      POSTGRES_USER: plagiat
+      POSTGRES_PASSWORD: plagiat
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  file-storing-service:
+    build:
+      context: ./file-storing-service
+      dockerfile: Dockerfile
+    container_name: file-storing-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/plagiat
+      SPRING_DATASOURCE_USERNAME: plagiat
+      SPRING_DATASOURCE_PASSWORD: plagiat
+      SPRING_PROFILES_ACTIVE: docker
+    volumes:
+      - files-data:/app/files
+    depends_on:
+      - db
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  file-analysis-service:
+    build:
+      context: ./file-analysis-service
+      dockerfile: Dockerfile
+    container_name: file-analysis-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/plagiat
+      SPRING_DATASOURCE_USERNAME: plagiat
+      SPRING_DATASOURCE_PASSWORD: plagiat
+      SPRING_PROFILES_ACTIVE: docker
+      FILE_STORAGE_URL: http://file-storing-service:8080
+    depends_on:
+      - db
+      - file-storing-service
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SERVICES_FILE_STORAGE_URL: http://file-storing-service:8080
+      SERVICES_FILE_ANALYSIS_URL: http://file-analysis-service:8082
+      SPRINGDOC_SWAGGER_UI_ENABLED: "true"
+      SPRINGDOC_API_DOCS_ENABLED: "true"
+    depends_on:
+      - file-storing-service
+      - file-analysis-service
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  db-data:
+  files-data:
+
+networks:
+  app-network:
+    driver: bridge
