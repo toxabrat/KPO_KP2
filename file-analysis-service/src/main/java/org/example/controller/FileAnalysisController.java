@@ -13,6 +13,9 @@ import org.example.service.FileAnalysisService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * REST controller for file analysis operations.
+ */
 @RestController
 @RequestMapping("/api/analysis")
 @RequiredArgsConstructor

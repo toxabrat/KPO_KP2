@@ -13,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * Gateway service for file storage operations.
+ * Routes requests to the file-storing-service.
+ */
 @Slf4j
 @Service
 public class FileStorageService {
@@ -27,7 +31,6 @@ public class FileStorageService {
     }
 
     public FileDTO uploadFile(MultipartFile file) throws IOException {
-        log.debug("Starting file upload to storage service");
         
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new ByteArrayResource(file.getBytes()) {

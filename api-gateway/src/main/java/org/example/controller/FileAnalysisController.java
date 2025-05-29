@@ -12,6 +12,10 @@ import org.example.service.FileAnalysisService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Gateway controller for file analysis operations.
+ * Routes analysis requests to the file-analysis-service.
+ */
 @RestController
 @RequestMapping("/api/analysis")
 @Tag(name = "File Analysis", description = "API для анализа файлов")

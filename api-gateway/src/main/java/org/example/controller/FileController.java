@@ -16,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * Gateway controller for file operations.
+ * Routes file-related requests to the file-storing-service.
+ */
 @RestController
 @RequestMapping("/api/files")
 @Tag(name = "Files", description = "API для работы с файлами")

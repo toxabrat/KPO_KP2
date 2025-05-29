@@ -4,8 +4,14 @@ server:
 spring:
   application:
     name: file-analysis-service
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://db:5432/plagiat
+    username: plagiat
+    password: plagiat
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,30 +30,6 @@ springdoc:
     configUrl: /v3/api-docs/swagger-config
     url: /v3/api-docs
 
----
-spring:
-  config:
-    activate:
-      on-profile: local
-  datasource:
-    url: jdbc:postgresql://localhost:5432/plagiat
-    username: plagiat
-    password: plagiat
-    driver-class-name: org.postgresql.Driver
-file:
-  storage:
-    url: http://localhost:8080
-
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-  datasource:
-    url: jdbc:postgresql://db:5432/plagiat
-    username: plagiat
-    password: plagiat
-    driver-class-name: org.postgresql.Driver
 file:
   storage:
     url: http://file-storing-service:8080 

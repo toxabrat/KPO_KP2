@@ -12,6 +12,11 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.Optional;
 
+/**
+ * Service for analyzing file contents.
+ * Performs text analysis including word count, paragraph count, and character count.
+ * Caches analysis results in database.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for file operations.
+ */
 @RestController
 @RequestMapping("/api/files")
 @RequiredArgsConstructor

@@ -8,24 +8,6 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-
-springdoc:
-  api-docs:
-    enabled: true
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-    configUrl: /v3/api-docs/swagger-config
-    url: /v3/api-docs
-
-services:
-  file-storage:
-    url: http://localhost:8080
-  file-analysis:
-    url: http://localhost:8082
-
----
-spring:
   config:
     activate:
       on-profile: docker
@@ -34,4 +16,13 @@ services:
   file-storage:
     url: http://file-storing-service:8080
   file-analysis:
-    url: http://file-analysis-service:8082 
+    url: http://file-analysis-service:8082
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    configUrl: /v3/api-docs/swagger-config
+    url: /v3/api-docs 
