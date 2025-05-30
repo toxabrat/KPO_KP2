@@ -20,7 +20,7 @@
     <description>Parent POM for hwAntiplagHSE microservices application</description>
 
     <properties>
-        <java.version>23</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <commons-codec.version>1.16.1</commons-codec.version>

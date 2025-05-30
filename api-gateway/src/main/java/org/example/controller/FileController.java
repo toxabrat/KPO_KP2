@@ -47,7 +47,11 @@ public class FileController {
         @Parameter(description = "Файл для загрузки")
         @RequestParam("file") MultipartFile file
     ) throws IOException {
-        FileDTO response = fileStorageService.uploadFile(file);
-        return ResponseEntity.ok(response);
+        try {
+            FileDTO response = fileStorageService.uploadFile(file);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 } 

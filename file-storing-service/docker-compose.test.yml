@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  test:
+    image: maven:3.8.4-openjdk-17-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+    command: mvn clean test
+    environment:
+      - SPRING_PROFILES_ACTIVE=test 
